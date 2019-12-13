@@ -1,41 +1,35 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import isEqual from "react-fast-compare";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import isEqual from 'react-fast-compare';
 
 export default class ImageMapper extends Component {
 	constructor(props) {
 		super(props);
-		[
-			"drawrect",
-			"drawcircle",
-			"drawpoly",
-			"initCanvas",
-			"renderPrefilledAreas"
-		].forEach(f => (this[f] = this[f].bind(this)));
-		let absPos = { position: "absolute", top: 0, left: 0 };
+		['drawrect', 'drawcircle', 'drawpoly', 'initCanvas', 'renderPrefilledAreas'].forEach(
+			f => (this[f] = this[f].bind(this))
+		);
+		let absPos = { position: 'absolute', top: 0, left: 0 };
 		this.styles = {
-			container: { position: "relative" },
-			canvas: { ...absPos, pointerEvents: "none", zIndex: 2 },
-			img: { ...absPos, zIndex: 1, userSelect: "none" },
-			map: (props.onClick && { cursor: "pointer" }) || undefined
+			container: { position: 'relative' },
+			canvas: { ...absPos, pointerEvents: 'none', zIndex: 2 },
+			img: { ...absPos, zIndex: 1, userSelect: 'none' },
+			map: (props.onClick && { cursor: 'pointer' }) || undefined
 		};
 		// Props watched for changes to trigger update
 		this.watchedProps = [
-			"active",
-			"fillColor",
-			"height",
-			"imgWidth",
-			"lineWidth",
-			"src",
-			"strokeColor",
-			"width"
+			'active',
+			'fillColor',
+			'height',
+			'imgWidth',
+			'lineWidth',
+			'src',
+			'strokeColor',
+			'width'
 		];
 	}
 
 	shouldComponentUpdate(nextProps) {
-		const propChanged = this.watchedProps.some(
-			prop => this.props[prop] !== nextProps[prop]
-		);
+		const propChanged = this.watchedProps.some(prop => this.props[prop] !== nextProps[prop]);
 		return !isEqual(this.props.map, this.state.map) || propChanged;
 	}
 
@@ -44,10 +38,7 @@ export default class ImageMapper extends Component {
 	}
 
 	updateCacheMap() {
-		this.setState(
-			{ map: JSON.parse(JSON.stringify(this.props.map)) },
-			this.initCanvas
-		);
+		this.setState({ map: JSON.parse(JSON.stringify(this.props.map)) }, this.initCanvas);
 	}
 
 	componentDidUpdate() {
@@ -78,11 +69,8 @@ export default class ImageMapper extends Component {
 	}
 
 	drawpoly(coords, fillColor, lineWidth, strokeColor) {
-		coords = coords.reduce(
-			(a, v, i, s) => (i % 2 ? a : [...a, s.slice(i, i + 2)]),
-			[]
-		);
-		
+		coords = coords.reduce((a, v, i, s) => (i % 2 ? a : [...a, s.slice(i, i + 2)]), []);
+
 		this.ctx.fillStyle = fillColor;
 		this.ctx.beginPath();
 		this.ctx.lineWidth = lineWidth;
@@ -103,13 +91,10 @@ export default class ImageMapper extends Component {
 
 		this.canvas.width = this.props.width || this.img.clientWidth;
 		this.canvas.height = this.props.height || this.img.clientHeight;
-		this.container.style.width =
-			(this.props.width || this.img.clientWidth) + "px";
-		this.container.style.height =
-			(this.props.height || this.img.clientHeight) + "px";
-		this.ctx = this.canvas.getContext("2d");
+		this.container.style.width = (this.props.width || this.img.clientWidth) + 'px';
+		this.container.style.height = (this.props.height || this.img.clientHeight) + 'px';
+		this.ctx = this.canvas.getContext('2d');
 		this.ctx.fillStyle = this.props.fillColor;
-		//this.ctx.strokeStyle = this.props.strokeColor;
 
 		if (this.props.onLoad) this.props.onLoad();
 
@@ -117,11 +102,11 @@ export default class ImageMapper extends Component {
 	}
 
 	hoverOn(area, index, event) {
-		const shape = event.target.getAttribute("shape");
+		const shape = event.target.getAttribute('shape');
 
-		if (this.props.active && this["draw" + shape]) {
-			this["draw" + shape](
-				event.target.getAttribute("coords").split(","),
+		if (this.props.active && this['draw' + shape]) {
+			this['draw' + shape](
+				event.target.getAttribute('coords').split(','),
 				area.fillColor,
 				area.lineWidth || this.props.lineWidth,
 				area.strokeColor || this.props.strokeColor
@@ -137,6 +122,20 @@ export default class ImageMapper extends Component {
 		}
 
 		if (this.props.onMouseLeave) this.props.onMouseLeave(area, index, event);
+	}
+
+	mouseDown(area, index, event) {
+		if (this.props.onMouseDown) {
+			event.preventDefault();
+			this.props.onMouseDown(area, index, event);
+		}
+	}
+
+	mouseUp(area, index, event) {
+		if (this.props.onMouseUp) {
+			event.preventDefault();
+			this.props.onMouseUp(area, index, event);
+		}
 	}
 
 	click(area, index, event) {
@@ -175,7 +174,7 @@ export default class ImageMapper extends Component {
 	renderPrefilledAreas() {
 		this.state.map.areas.map(area => {
 			if (!area.preFillColor) return;
-			this["draw" + area.shape](
+			this['draw' + area.shape](
 				this.scaleCoords(area.coords),
 				area.preFillColor,
 				area.lineWidth || this.props.lineWidth,
@@ -190,10 +189,10 @@ export default class ImageMapper extends Component {
 		const scaledCoords = this.scaleCoords(area.coords);
 
 		switch (area.shape) {
-			case "circle":
+			case 'circle':
 				return [scaledCoords[0], scaledCoords[1]];
-			case "poly":
-			case "rect":
+			case 'poly':
+			case 'rect':
 			default: {
 				// Calculate centroid
 				const n = scaledCoords.length / 2;
@@ -217,11 +216,13 @@ export default class ImageMapper extends Component {
 				<area
 					key={area._id || index}
 					shape={area.shape}
-					coords={scaledCoords.join(",")}
+					coords={scaledCoords.join(',')}
 					onMouseEnter={this.hoverOn.bind(this, extendedArea, index)}
 					onMouseLeave={this.hoverOff.bind(this, extendedArea, index)}
 					onMouseMove={this.mouseMove.bind(this, extendedArea, index)}
 					onClick={this.click.bind(this, extendedArea, index)}
+					onMouseDown={this.mouseDown.bind(this, extendedArea, index)}
+					onMouseUp={this.mouseUp.bind(this, extendedArea, index)}
 					href={area.href}
 				/>
 			);
@@ -235,7 +236,7 @@ export default class ImageMapper extends Component {
 					style={this.styles.img}
 					src={this.props.src}
 					useMap={`#${this.state.map.name}`}
-					alt=""
+					alt=''
 					ref={node => (this.img = node)}
 					onLoad={this.initCanvas}
 					onClick={this.imageClick.bind(this)}
@@ -252,13 +253,13 @@ export default class ImageMapper extends Component {
 
 ImageMapper.defaultProps = {
 	active: true,
-	fillColor: "rgba(255, 255, 255, 0.5)",
+	fillColor: 'rgba(255, 255, 255, 0.5)',
 	lineWidth: 1,
 	map: {
 		areas: [],
-		name: "image-map-" + Math.random()
+		name: 'image-map-' + Math.random()
 	},
-	strokeColor: "rgba(0, 0, 0, 0.5)"
+	strokeColor: 'rgba(0, 0, 0, 0.5)'
 };
 
 ImageMapper.propTypes = {
@@ -274,6 +275,8 @@ ImageMapper.propTypes = {
 	onClick: PropTypes.func,
 	onMouseMove: PropTypes.func,
 	onImageClick: PropTypes.func,
+	onMouseUp: PropTypes.func,
+	onMouseDown: PropTypes.func,
 	onImageMouseMove: PropTypes.func,
 	onLoad: PropTypes.func,
 	onMouseEnter: PropTypes.func,
