@@ -130,7 +130,7 @@ var App = React.createClass({
 							onMouseEnter={area => this.enterArea(area)}
 							onMouseLeave={area => this.leaveArea(area)}
 							onMouseMove={(area, _, evt) => this.moveOnArea(area, evt)}
-							onImageClick={evt => this.clickedOutside(evt)}
+							onImageClick={evt => /*this.clickedOutside(evt)*/ console.log('CLICK')}
 							onImageMouseMove={evt => this.moveOnImage(evt)}
 							lineWidth={4}
 							strokeColor={'white'}

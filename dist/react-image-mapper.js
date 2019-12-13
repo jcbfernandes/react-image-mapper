@@ -1634,7 +1634,6 @@ var ImageMapper = (function (_Component) {
 		key: 'imageMouseDown',
 		value: function imageMouseDown(event) {
 			if (this.props.onImageMouseDown) {
-				event.preventDefault();
 				this.props.onImageMouseDown(event);
 			}
 		}
@@ -1642,7 +1641,6 @@ var ImageMapper = (function (_Component) {
 		key: 'imageMouseUp',
 		value: function imageMouseUp(event) {
 			if (this.props.onImageMouseUp) {
-				event.preventDefault();
 				this.props.onImageMouseUp(event);
 			}
 		}
@@ -1658,7 +1656,6 @@ var ImageMapper = (function (_Component) {
 		key: 'imageClick',
 		value: function imageClick(event) {
 			if (this.props.onImageClick) {
-				event.preventDefault();
 				this.props.onImageClick(event);
 			}
 		}

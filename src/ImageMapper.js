@@ -126,42 +126,36 @@ export default class ImageMapper extends Component {
 
 	areaMouseDown(area, index, event) {
 		if (this.props.onAreaMouseDown) {
-			event.preventDefault();
 			this.props.onAreaMouseDown(area, index, event);
 		}
 	}
 
 	areaMouseUp(area, index, event) {
 		if (this.props.onAreaMouseUp) {
-			event.preventDefault();
 			this.props.onAreaMouseUp(area, index, event);
 		}
 	}
 
 	imageMouseDown(event) {
 		if (this.props.onImageMouseDown) {
-			event.preventDefault();
 			this.props.onImageMouseDown(event);
 		}
 	}
 
 	imageMouseUp(event) {
 		if (this.props.onImageMouseUp) {
-			event.preventDefault();
 			this.props.onImageMouseUp(event);
 		}
 	}
 
 	click(area, index, event) {
 		if (this.props.onClick) {
-			event.preventDefault();
 			this.props.onClick(area, index, event);
 		}
 	}
 
 	imageClick(event) {
 		if (this.props.onImageClick) {
-			event.preventDefault();
 			this.props.onImageClick(event);
 		}
 	}
