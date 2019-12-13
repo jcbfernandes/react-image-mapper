@@ -1615,19 +1615,35 @@ var ImageMapper = (function (_Component) {
 			if (this.props.onMouseLeave) this.props.onMouseLeave(area, index, event);
 		}
 	}, {
-		key: 'mouseDown',
-		value: function mouseDown(area, index, event) {
-			if (this.props.onMouseDown) {
+		key: 'areaMouseDown',
+		value: function areaMouseDown(area, index, event) {
+			if (this.props.onAreaMouseDown) {
 				event.preventDefault();
 				this.props.onMouseDown(area, index, event);
 			}
 		}
 	}, {
-		key: 'mouseUp',
-		value: function mouseUp(area, index, event) {
-			if (this.props.onMouseUp) {
+		key: 'areaMouseUp',
+		value: function areaMouseUp(area, index, event) {
+			if (this.props.onAreaMouseUp) {
 				event.preventDefault();
 				this.props.onMouseUp(area, index, event);
+			}
+		}
+	}, {
+		key: 'imageMouseDown',
+		value: function imageMouseDown(event) {
+			if (this.props.onImageMouseDown) {
+				event.preventDefault();
+				this.props.onImageMouseDown(event);
+			}
+		}
+	}, {
+		key: 'imageMouseUp',
+		value: function imageMouseUp(event) {
+			if (this.props.onImageMouseUp) {
+				event.preventDefault();
+				this.props.onImageMouseUp(event);
 			}
 		}
 	}, {
@@ -1737,8 +1753,8 @@ var ImageMapper = (function (_Component) {
 					onMouseLeave: _this5.hoverOff.bind(_this5, extendedArea, index),
 					onMouseMove: _this5.mouseMove.bind(_this5, extendedArea, index),
 					onClick: _this5.click.bind(_this5, extendedArea, index),
-					onMouseDown: _this5.mouseDown.bind(_this5, extendedArea, index),
-					onMouseUp: _this5.mouseUp.bind(_this5, extendedArea, index),
+					onMouseDown: _this5.areaMouseDown.bind(_this5, extendedArea, index),
+					onMouseUp: _this5.areaMouseUp.bind(_this5, extendedArea, index),
 					href: area.href
 				});
 			});
@@ -1763,7 +1779,8 @@ var ImageMapper = (function (_Component) {
 					},
 					onLoad: this.initCanvas,
 					onClick: this.imageClick.bind(this),
-					onMouseMove: this.imageMouseMove.bind(this)
+					onMouseMove: this.imageMouseMove.bind(this),
+					onMouseDown: this.imageMouseDown
 				}),
 				_react2['default'].createElement('canvas', { ref: function (node) {
 						return _this6.canvas = node;
@@ -1806,8 +1823,10 @@ ImageMapper.propTypes = {
 	onClick: _propTypes2['default'].func,
 	onMouseMove: _propTypes2['default'].func,
 	onImageClick: _propTypes2['default'].func,
-	onMouseUp: _propTypes2['default'].func,
-	onMouseDown: _propTypes2['default'].func,
+	onAreaMouseUp: _propTypes2['default'].func,
+	onAreaMouseDown: _propTypes2['default'].func,
+	onImageMouseUp: _propTypes2['default'].func,
+	onImageMouseDown: _propTypes2['default'].func,
 	onImageMouseMove: _propTypes2['default'].func,
 	onLoad: _propTypes2['default'].func,
 	onMouseEnter: _propTypes2['default'].func,

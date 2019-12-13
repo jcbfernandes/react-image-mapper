@@ -124,17 +124,31 @@ export default class ImageMapper extends Component {
 		if (this.props.onMouseLeave) this.props.onMouseLeave(area, index, event);
 	}
 
-	mouseDown(area, index, event) {
-		if (this.props.onMouseDown) {
+	areaMouseDown(area, index, event) {
+		if (this.props.onAreaMouseDown) {
 			event.preventDefault();
 			this.props.onMouseDown(area, index, event);
 		}
 	}
 
-	mouseUp(area, index, event) {
-		if (this.props.onMouseUp) {
+	areaMouseUp(area, index, event) {
+		if (this.props.onAreaMouseUp) {
 			event.preventDefault();
 			this.props.onMouseUp(area, index, event);
+		}
+	}
+
+	imageMouseDown(event) {
+		if (this.props.onImageMouseDown) {
+			event.preventDefault();
+			this.props.onImageMouseDown(event);
+		}
+	}
+
+	imageMouseUp(event) {
+		if (this.props.onImageMouseUp) {
+			event.preventDefault();
+			this.props.onImageMouseUp(event);
 		}
 	}
 
@@ -221,8 +235,8 @@ export default class ImageMapper extends Component {
 					onMouseLeave={this.hoverOff.bind(this, extendedArea, index)}
 					onMouseMove={this.mouseMove.bind(this, extendedArea, index)}
 					onClick={this.click.bind(this, extendedArea, index)}
-					onMouseDown={this.mouseDown.bind(this, extendedArea, index)}
-					onMouseUp={this.mouseUp.bind(this, extendedArea, index)}
+					onMouseDown={this.areaMouseDown.bind(this, extendedArea, index)}
+					onMouseUp={this.areaMouseUp.bind(this, extendedArea, index)}
 					href={area.href}
 				/>
 			);
@@ -241,6 +255,7 @@ export default class ImageMapper extends Component {
 					onLoad={this.initCanvas}
 					onClick={this.imageClick.bind(this)}
 					onMouseMove={this.imageMouseMove.bind(this)}
+					onMouseDown={this.imageMouseDown}
 				/>
 				<canvas ref={node => (this.canvas = node)} style={this.styles.canvas} />
 				<map name={this.state.map.name} style={this.styles.map}>
@@ -275,8 +290,10 @@ ImageMapper.propTypes = {
 	onClick: PropTypes.func,
 	onMouseMove: PropTypes.func,
 	onImageClick: PropTypes.func,
-	onMouseUp: PropTypes.func,
-	onMouseDown: PropTypes.func,
+	onAreaMouseUp: PropTypes.func,
+	onAreaMouseDown: PropTypes.func,
+	onImageMouseUp: PropTypes.func,
+	onImageMouseDown: PropTypes.func,
 	onImageMouseMove: PropTypes.func,
 	onLoad: PropTypes.func,
 	onMouseEnter: PropTypes.func,
