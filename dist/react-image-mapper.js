@@ -1619,7 +1619,7 @@ var ImageMapper = (function (_Component) {
 		value: function areaMouseDown(area, index, event) {
 			if (this.props.onAreaMouseDown) {
 				event.preventDefault();
-				this.props.onMouseDown(area, index, event);
+				this.props.onAreaMouseDown(area, index, event);
 			}
 		}
 	}, {
@@ -1627,7 +1627,7 @@ var ImageMapper = (function (_Component) {
 		value: function areaMouseUp(area, index, event) {
 			if (this.props.onAreaMouseUp) {
 				event.preventDefault();
-				this.props.onMouseUp(area, index, event);
+				this.props.onAreaMouseUp(area, index, event);
 			}
 		}
 	}, {
@@ -1780,7 +1780,8 @@ var ImageMapper = (function (_Component) {
 					onLoad: this.initCanvas,
 					onClick: this.imageClick.bind(this),
 					onMouseMove: this.imageMouseMove.bind(this),
-					onMouseDown: this.imageMouseDown
+					onMouseDown: this.imageMouseDown.bind(this),
+					onMouseUp: this.imageMouseUp.bind(this)
 				}),
 				_react2['default'].createElement('canvas', { ref: function (node) {
 						return _this6.canvas = node;

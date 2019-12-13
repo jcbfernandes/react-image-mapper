@@ -123,12 +123,14 @@ var App = React.createClass({
 							width={500}
 							onLoad={() => this.load()}
 							onClick={area => this.clicked(area)}
-							onMouseUp={area => this.mouseUp(area)}
-							onMouseDown={area => this.mouseDown(area)}
+							onAreaMouseUp={area => this.mouseUp(area)}
+							onAreaMouseDown={area => this.mouseDown(area)}
+							onImageMouseUp={area => console.log('OLA')}
+							onImageMouseDown={area => console.log('OLE')}
 							onMouseEnter={area => this.enterArea(area)}
 							onMouseLeave={area => this.leaveArea(area)}
 							onMouseMove={(area, _, evt) => this.moveOnArea(area, evt)}
-							//onImageClick={evt => this.clickedOutside(evt)}
+							onImageClick={evt => this.clickedOutside(evt)}
 							onImageMouseMove={evt => this.moveOnImage(evt)}
 							lineWidth={4}
 							strokeColor={'white'}

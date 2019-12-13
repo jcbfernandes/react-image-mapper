@@ -127,14 +127,14 @@ export default class ImageMapper extends Component {
 	areaMouseDown(area, index, event) {
 		if (this.props.onAreaMouseDown) {
 			event.preventDefault();
-			this.props.onMouseDown(area, index, event);
+			this.props.onAreaMouseDown(area, index, event);
 		}
 	}
 
 	areaMouseUp(area, index, event) {
 		if (this.props.onAreaMouseUp) {
 			event.preventDefault();
-			this.props.onMouseUp(area, index, event);
+			this.props.onAreaMouseUp(area, index, event);
 		}
 	}
 
@@ -255,7 +255,8 @@ export default class ImageMapper extends Component {
 					onLoad={this.initCanvas}
 					onClick={this.imageClick.bind(this)}
 					onMouseMove={this.imageMouseMove.bind(this)}
-					onMouseDown={this.imageMouseDown}
+					onMouseDown={this.imageMouseDown.bind(this)}
+					onMouseUp={this.imageMouseUp.bind(this)}
 				/>
 				<canvas ref={node => (this.canvas = node)} style={this.styles.canvas} />
 				<map name={this.state.map.name} style={this.styles.map}>
